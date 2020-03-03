@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<title> M1105 - TP n°7 - 2ème partie</title>
+		<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="styleprint.css" media="print" />
+	</head>
+
+<body>
+<header>Université de Grenoble Alpes - IUT2 - Département informatique<br />
+M1105 - Web
+</header>
+       <h1>TP 7 - 2ème Partie (2H) <br />
+       Un framework CSS/Javascript: Bootstrap</h1>
+        <hr />
+        <h2>Objectifs du TP</h2>
+        <ul>
+            <li>Tester le framework Bootstrap et en comprendre l'utilité</li>
+        </ul>
+    <p>Ce document est consultable sur la plateforme Chamilo du département.
+	</p>
+  <hr />
+<h2>Introduction</h2>
+
+<p>Bootstrap, initialement développé par Twitter (et maintenant par un
+  grand nombre de contributeurs externes), est une bibliothèque sous
+  license libre, qui fournit un ensemble d'outils facilitant le travail des développeurs web :
+  <ul>
+    <li>Un ensemble de fichiers CSS qui apporte des styles par défaut
+      à la plupart des éléments HTML, avec un aspect moderne.</li>
+    <li>Un système de grille dynamique, qui permet d'écrire très
+      facilement la structure d'une page HTML "responsive".</li>
+    <li>Un ensemble de fichiers Javascript, qui permettent de dynamiser
+      une page, par exemple en permettant la création d'onglets,
+      d'alertes, etc.</li>
+    <li>Enfin, il existe de nombreux thèmes pour Bootstrap.</li>
+  </ul>
+</p>
+
+<p>Dans ce TP, nous allons explorer quelques unes des possibilités offertes par
+  Bootstrap.</p>
+
+<h2>Par où commencer ?</h2>
+<ul>
+	<li>Créez un répertoire <kbd>TP7-2</kbd> dans votre répertoire <kbd>M1105</kbd></li>
+	<li>Dans ce répertoire <kbd>TP7-2</kbd>, créez un fichier <strong>essaibootstrap.html</strong> que vous initialiserez
+  de cette manière (c'est un document Bootstrap minimal) :</li>
+</ul>
+<p></p>
+
+
+<pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+    &lt;title&gt;My awesome bootstrap page&lt;/title&gt;
+    &lt;!-- Bootstrap --&gt;
+    &lt;link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;
+     Here, folks, shall live your code !
+    &lt;/h1&gt;
+
+    &lt;!-- jQuery (necessary for Bootstrap's JavaScript plugins) --&gt;
+    &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;!-- Bootstrap's JavaScript plugins --&gt;
+    &lt;script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Vous reconnaîtrez la structure de base d'un fichier HTML. Vous remarquerez que les
+  styles CSS sont contenus dans le
+  fchier <strong>bootstrap.min.css</strong>. Un ensemble de scripts
+  Javascript sont également inclus: <strong>bootstrap.min.js</strong>, et il y a également
+	une bibliothèque JavaScript très connue : <strong>jquery.min.js</strong></p>
+<p>
+	Vou noterez également que parmi les métainformations, vous trouvez: <br>
+	<strong> &lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+ </strong>
+		<br>
+	 En effet, Bootstrap permet de créer facilement des designs adaptatifs (dits <em>responsive</em> en anglais - voir le TP précédent).
+</p>
+<p>Téléchargez
+  maintenant <a href="https://github.com/twbs/bootstrap/releases/download/v3.3.5/bootstrap-3.3.5-dist.zip">Bootstrap</a>
+  et dézippez-le dans votre dossier TP7-2.</p>
+
+<p>Votre répertoire est maintenant prêt à accueilir des éléments
+  Bootstrap !</p>
+
+<h2>Le modèle de grille "responsive"</h2>
+
+<p>
+	Vous avez besoin de documentation; vous pouvez accéder à:
+</p>
+<ul>
+	<li><a href="http://getbootstrap.com/getting-started/" target="_blank">la documentation officielle
+	    de Bootstrap </a></li>
+	<li><a href="http://www.w3schools.com/bootstrap/" target="_blank">le tutorial de
+	    W3Schools</a> qui est également une bonne référence.</li>
+</ul>
+
+<p>Grâce à un ensemble intelligent de classes CSS (attributs du
+  type <strong>class="classe1 classe2 classe3"</strong>), il est très
+  facile de construire une grille d'éléments dynamiques, qui se
+  positionneront les uns à côté des autres, ou les uns au-dessus des
+  autres, en fonction de la taille de la fenêtre.</p>
+
+<p>Nous allons construire ici une page contenant
+  quatre blocs de contenu. En fonction de la taille de la fenêtre on
+  aimerait que les blocs soient agencés ainsi :</p>
+
+<pre><code>
+Ordinateur de bureau :
+
+    | Bloc 1 | Bloc 2 | Bloc 3 | Bloc 4 |
+
+Tablette :
+
+    | Bloc 1  |  Bloc 2 |
+    | Bloc 3  |  Bloc 4 |
+
+Smartphone :
+
+    |   Bloc 1   |
+    |   Bloc 2   |
+    |   Bloc 3   |
+    |   Bloc 4   |
+
+</code></pre>
+<p>Pour ce faire, voici quelques indications :</p>
+  <ul>
+    <li>Bootstrap utilise un <strong>système de grille</strong> qui se compose de <strong>plusieurs lignes</strong> pour le contenu (dans notre exmple, 1 seule ligne de 4 blocs)</li>
+		<li>Les lignes doivent être placées dans une division <kbd>&lt;div class="<em>container-fluid</em>"&gt; ... &lt;/div&gt;</kbd>
+		(full-width) ou dans une division <kbd>&lt;div class="<em>container</em>"&gt; ... &lt;/div&gt;</kbd>(fixed-width)</li>
+			<li><strong>Une ligne</strong> <kbd>(&lt;div class="<em>row</em>"&gt;... &lt;/div&gt;)</kbd>a une largeur de <strong>12 colonnes</strong>.</li>
+			<li>une ligne se décompose en 1 ou plusieurs <strong>cellules (ou blocs)</strong> de contenu</li>
+    <li>Un <strong>bloc</strong> occupe un certain nombre de colonnes</li>
+    <li>On applique à un bloc des <strong>classes CSS bootstrap</strong> pour lui indiquer comment
+      se positionner</li>
+    <li>Les noms de ces <strong>classes CSS bootstrap</strong> se forment sur le modèle suivant
+      : <em>col-ECRAN-LARGEUR</em>, avec:
+			<ul>
+				<li><em>ECRAN</em>: qui représente le type
+	      d'écran sur lequel vous voulez appliquer cette classe
+	      (<em>xs</em> pour smartphone, <em>sm</em> pour tablette,
+	      et <em>md</em> pour ordianteur de bureau)</li>
+				<li><em>LARGEUR</em>: qui représente la largeur du bloc (largeur entre 1 et 12).</li>
+				<li> Par exemple, la classe <kbd>class=<em>"col-md-3"</em></kbd> signifie que le
+		      bloc doit avoir une largeur de 3/12 de la page sur un ordinateur de bureau. Vous appliquerez 3 classes à chacun des blocs.
+				</li>
+				<li>Rmq: on peut avoir aussi une classe comme <kbd>class=<em>"col-xs-12 col-sm-6 col-md-8"</em></kbd>  </li>
+			</ul>
+		</li>
+
+  </ul>
+
+	<h3>Premier test:</h3>
+	<p>
+		Vous pouvez vous aider des explications du site <a href="http://getbootstrap.com/css/#grid" target="_blank">Bootstrap Grid System</a> et
+		du site w3schools: <a href="http://www.w3schools.com/bootstrap/bootstrap_grid_basic.asp" target="_blank">
+		Bootstrap Grids</a>
+	</p>
+  <p>Dans votre fichier <strong>essaibootstrap.html</strong>:  </p>
+	<ul>
+		<li>ajoutez une division <kbd>&lt;div class="<em>container-fluid</em>"&gt; ... &lt;/div&gt;</kbd></li>
+		<li>dans cette division, ajoutez une "ligne de grille"
+	<kbd>(&lt;div class="<em>row</em>"&gt;... &lt;/div&gt;)</kbd> qui contiendra elle-même 4 blocs de contenu <kbd>(&lt;div
+	class="  "&gt;... &lt;/div&gt;)</kbd></li>
+	<li>précisez les classes de ces 4 divisions et ajoutez-leur un contenu quelconque,
+		par exemple un paragraphe "lipsum"</a>.
+</li>
+	</ul>
+
+
+<p>En changeant la largeur de la fenêtre de votre navigateur, vérifiez que les blocs
+  s'agencent de la manière décrite ci-dessus.</p>
+
+<p><strong>Attention !</strong> Si vos blocs n'ont pas tous la même hauteur, vous
+  devrez ajouter des "retours à la ligne"
+  (<kbd>&lt;div class="<em>clearfix visible-sm-block</em>"&gt;&lt;/div&gt;</kbd>), en
+  remplaçant <em>-sm-</em> par la taille d'écran pour laquelle vous
+  souhaitez insérer ce retour à la ligne.
+	Plus d'explications sur le <a href="http://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_grid_ex7&stacked=h" target="_blank">clearfix.</a></p>
+
+
+<!-- Page bootstrap -->
+<h2>Réalisation d'une page avec Bootstrap</h2>
+
+<h3>Rendu final à obtenir</h3>
+<p>
+	La page que nous voulons construire est la suivante:
+</p>
+
+<p class="centre"><img class="image" src="bootstrap-site.png" alt="Résultat final" /></p>
+
+<h3>Préparation</h3>
+<ul>
+	<li>Recopiez dans votre répertoire <kbd>TP7-2</kbd> le contenu du répertoire <kbd>/users/info/pub/1a/M1105/tp7-2</kbd></li>
+</ul>
+
+<h3>Étude initial</h3>
+<p>Visualisez le fichier <strong>TP7.html</strong> avec Firefox. Puis, ouvrez
+	<strong>TP7.html</strong> avec l'éditeur Atom pour en analyser le code.
+Vous remarquerez que des classes CSS Bootstrap ont été utilisées.</p>
+	 <p>
+	 	A quoi correspondent les classes <em>thumbnail</em> ? <em>caption</em> ? (Consultez la <a href="http://getbootstrap.com/components/" target="_blank">documentation</a>)
+	 </p>
+
+<p>Enlevez temporairement la classe <em>thumbnail</em> de l'une des
+	divs et observez le résultat sur Firefox. N'oubliez pas de la rajouter !</p>
+
+<h3>Menu de type "navbar"</h3>
+<p>Maintenant, nous allons créer un menu du type "navbar".</p>
+
+ <ul>
+ 	<li>Copiez et collez le code suivant au début de votre division body :</p>
+
+ <pre><code>
+ &lt;nav class="navbar navbar-default"&gt;
+ 	&lt;div class="container"&gt;
+ 		&lt;div class="navbar-header"&gt;
+ 			&lt;button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+ 			  data-target="#navbar" aria-expanded="false" aria-controls="navbar"&gt;
+ 				&lt;span class="sr-only"&gt;Toggle navigation&lt;/span&gt;
+ 				&lt;span class="icon-bar"&gt;&lt;/span&gt;
+ 				&lt;span class="icon-bar"&gt;&lt;/span&gt;
+ 				&lt;span class="icon-bar"&gt;&lt;/span&gt;
+ 			&lt;/button&gt;
+ 			&lt;a class="navbar-brand" href="#"&gt;Little One Apps&lt;/a&gt;
+ 		&lt;/div&gt;
+ 		&lt;div id="navbar" class="collapse navbar-collapse"&gt;
+ 			&lt;ul class="nav navbar-nav"&gt;
+ 			&lt;/ul&gt;
+ 		&lt;/div&gt;
+ 	&lt;/div&gt;
+ &lt;/nav&gt;
+ </code></pre>
+</li>
+<li>Observez la structure du code rajouté, en particulier les identifiants (id) et les
+	classes CSS utilisées. Un <a href="http://getbootstrap.com/components/#navbar" target="_blank">navbar</a> créé avec Bootstrap doit avoir toujours à peu près
+	la même structure.</li>
+	<li>Pour rajouter des liens au menu, créez des éléments <strong>li</strong> dans
+		la liste <strong>ul</strong>. Chaque <strong>li</strong> devra contenir aussi un lien
+		(<strong>&lt;a&gt;</strong>).
+	</li>
+		<li>Sur Firefox, défilez vers le bas de la page. Observez que la barre de menu créée disparaît en
+			haut. Nous pouvons changer ce comportement et "fixer" la barre. Rajoutez la classe <em>navbar-fixed-top</em> à la
+			balise <strong>nav</strong>.
+		</li>
+		<li>Sur Firefox, défilez vers le bas de la page à nouveau. Observez que maintenant la barre
+			est toujours visible grâce à la classe <em>navbar-fixed-top</em>.
+		</li>
+		<li>Avez-vous remarqué que cette dernière modification fait que le menu couvre le contenu
+			de la page? Dans votre fichier <strong>TP7.css</strong>, ajoutez une marge intérieure haute
+			de 50px à l'élément <strong>body</strong>. Cette configuration réglera le problème.
+		</li>
+		<li>Redimensionnez maintenant votre fenêtre
+			horizontalement. Que se passe-t-il ? Bootstrap 3 est un framework "mobile-fisrt",
+			c'est-à-dire, il a été conçu en tenant compte d'abord les utilisateurs de
+			dispositifs mobiles.
+		</li>
+ </ul>
+
+
+<p>Voilà, notre menu est fait ! La prochaine étape concerne la mise en forme du contenu
+	de la page.</p>
+
+<h3>Un peu de mise en forme</h3>
+
+<p>Trouvez la <strong>div</strong> qui est en dessous du commentaire
+	<strong>&lt;!-- Présentation --&gt; </strong> et lui ajouter la classe <em>jumbotron</em> (documentation
+	<a href="http://getbootstrap.com/components/#jumbotron" target="_blank">jumbotron</a>).
+	Rechargez la page et vérifiez le résultat. </p>
+
+<p>Ajoutez aussi la classe <em>text-center</em> pour centrer
+	le texte.</p>
+
+<p>
+	C'est déjà bien, mais on peut faire mieux ! Ajoutez les classes <em>btn</em>,
+	<em>btn-lg</em> et <em>btn-success</em> au lien "En savoir plus".
+	Vérifiez le résultat sur Firefox.
+</p>
+
+<h3>Configuration de la grille</h3>
+
+<p>Nous avons presque fini. Voici un défi pour terminer : rajoutez de classes CSS
+	de configuration de grille aux balises <strong>div</strong> qui sont dans la
+	<strong>&lt;div class="row"&gt;</strong>. Vous devez reproduire
+	la configuration suivante.</p>
+
+<pre><code>
+Ordinateur de bureau :
+
+    | Bloc 1 | Bloc 2 | Bloc 3 | Bloc 4 |
+
+Tablette :
+
+    | Bloc 1  |  Bloc 2 | Bloc 3 |
+              |  Bloc 4 |
+
+Smartphone :
+
+    |   Bloc 1   |
+    |   Bloc 2   |
+    |   Bloc 3   |
+    |   Bloc 4   |
+</code></pre>
+
+<p>Pour ce faire, voici quelques indications :
+  <ul>
+    <li>Vous aurez besoin d'utiliser l'ensemble de classes <em>col-*-offset-*</em> (par exemple, <em>col-lg-offset-0</em>).
+			Voir la <a target="_blank" href="http://getbootstrap.com/css/#grid-offsetting">documentation</a> pour plus d'information.
+		<li>Observez que les balises <strong>&lt;div class="container-fluid"&gt;</strong> et
+		<strong>&lt;div class="row"&gt;</strong> sont déjà créées. Pas besoin de les
+		modifier !</li>
+  </ul>
+</p>
+
+<p>
+	Le design de votre page est terminé!
+</p>
+
+<h2>Pour aller plus loin : des composants Bootstrap</h2>
+
+<p>Nous allons maintenant voir d'autres composants pré-construits que Bootstrap propose.</p>
+<p>Reprenez votre fichier <strong>essaibootstrap.html</strong> et dans vos blocs, ajoutez :
+  <ul>
+    <li>Un tableau (<strong>&lt;table class="table table-hover"&gt;</strong>) qui contiendra quelques
+    lignes (<strong>&lt;tr&gt;</strong>) et colonnes (<strong>&lt;th&gt;</strong> et <strong>&lt;td&gt;</strong>). Observez le
+      style qui est appliqué au tableau</li>
+    <li>Des boutons (<strong>&lt;button type="button" class="btn
+      btn-default"&gt;Clic me&lt;/button&gt;</strong>), en testant d'autres
+      valeurs que btn-default (testez btn-primary, btn-success, btn-info,
+      btn-warning, btn-danger, btn-link)</li>
+    <li>Des icônes dans le contenu de vos boutons (<strong>&lt;span class="glyphicon glyphicon-search" aria-hidden="true"&gt;&lt;/span&gt;</strong>).
+			<a href="http://getbootstrap.com/components/#glyphicons-glyphs" target="_blank">Liste
+        des icônes</a></li>
+    <li>Des alertes (<strong>&lt;div class="alert alert-success"
+      role="alert"&gt;Super!&lt;/div&gt;</strong>), en testant également
+      alert-info, alert-warning et alert-danger</li>
+  </ul>
+</p>
+<p>Un grand nombre de composants sont disponibles, voir la <a href="http://getbootstrap.com/components/">documentation</a>.
+</p>
+
+<h2>Pour finir : un peu de dynamisme</h2>
+
+<p>Javascript est le langage de programmation qui permet d'animer les
+  pages web : en les rendant interactives, en communiquant avec un
+  serveur pour actualiser automatiquement le contenu (comme par exemple
+  sur les webmails modernes), etc.</p>
+<p>Bootstrap intègre une bibliothèqye Javascript qui permet de faire pas
+  mal de "magie" automatiquement! Ajoutez par exemple sur votre page un <strong>modal</strong> (en plaçant son contenu à l'extérieur
+  de votre container, et un bouton pour l'activer dans un de vos
+  blocs). Un modal est une fenêtre qui apparait par-dessus la page
+  pour donner une information à l'utilisateur. Pour cela,
+  suivez la <a href="http://getbootstrap.com/javascript/#live-demo" target="_blank">documentation</a> qui fournit un exemple simple.
+</p>
+
+	<p>
+		Vous pouvez encore aller plus loin avec
+		<a target="_blank" href="http://getbootstrap.com/" target="_blank">Bootstrap</a>:
+		<em>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web!</em>
+	</p>
+
+<h2>Travail personnel</h2>
+<p>
+	Faites les exercices de <a href="https://www-info.iut2.univ-grenoble-alpes.fr/intranet/enseignements/M1105/tp8-revisions/2019tp8-revisions.html" target="_blank"> révision </a>pour vous préparer à l'examen.
+</p>
+
+
+</body>
+</html>
